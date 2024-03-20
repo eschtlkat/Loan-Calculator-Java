@@ -1,0 +1,160 @@
+package loanCalculator;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.*;
+import java.awt.*;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+
+public class MyFrame extends JFrame implements ActionListener {
+	
+	JPanel panelOne,panelTwo, panelThree;
+	
+	JLabel labelOne, labelTwo, labelThree, labelFour, labelFive;
+	
+	JTextField textFieldLoan, textFieldTermYears, textFieldTermMonths, textFieldPercentage;
+	
+	JComboBox comboBoxMonths, comboBoxYears, comboBoxPercentage;
+	
+	JButton button, buttonAnuiteto, buttonLinijinis;
+	int loanSum, whichGraph = 0, month = 0, year = 0, percentage = 1;
+	
+	MyFrame() {
+		this.setTitle("Busto paskolos skaiciuokle");
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setLayout(new BorderLayout());
+		this.setSize(800,600); //sets the x-dimension and y=dimension;
+		this.setResizable(false); //prevent this from being resized
+		this.setVisible(true);
+		ImageIcon image = new ImageIcon("C:\\Users\\laura\\eclipse-workspace\\loanCalculator\\src\\a.jpg"); //create an image icon
+		this.setIconImage(image.getImage()); //change icon of this
+		this.getContentPane().setBackground(Color.lightGray); //change color of background
+		
+		labelOne = new JLabel("Pageidautina paskolos suma"); //create a label and set text of label
+		labelTwo = new JLabel("Metai"); //create a label and set text of label
+		labelThree = new JLabel("Menesiai"); //create a label and set text of label
+		labelFour = new JLabel("Metinis procentas"); //create a label and set text of label
+		labelFive = new JLabel("Pasirinkite grafika"); //create a label and set text of label
+		
+		
+		
+		panelOne = new JPanel();
+		panelOne.setBackground(Color.white);
+		panelOne.setLayout(new FlowLayout(FlowLayout.CENTER));
+
+		
+		panelTwo = new JPanel();
+		panelTwo.setBackground(Color.white);
+		
+		panelThree = new JPanel();
+		panelThree.setBackground(Color.white);
+				
+		
+		button = new JButton("Ivykdyti");
+		button.addActionListener(this);
+		
+		buttonAnuiteto = new JButton("Anuiteto grafikas");
+		buttonAnuiteto.addActionListener(this);
+		
+		buttonLinijinis = new JButton("Linijinis grafikas");
+		buttonLinijinis.addActionListener(this);
+		
+		textFieldLoan = new JTextField();
+		textFieldLoan.setPreferredSize(new Dimension(100, 25));
+		textFieldLoan.setFont(new Font("Consolas ", Font.PLAIN, 15));
+		
+		Integer[] months = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
+		comboBoxMonths = new JComboBox(months);
+		comboBoxMonths.addActionListener(this);
+		
+		Integer[] years = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50};
+		comboBoxYears = new JComboBox(years);
+		comboBoxYears.addActionListener(this);
+		
+		String[] percentage = {"1 %", "2 %", "3 %", "4 %", "5 %", "6 %", "7 %", "8 %", "9 %", "10 %", "11 %", "12 %", "13 %", "14 %", "15 %", "16 %", "17 %", "18 %", "19 %", "20 %", "21 %", "22 %", "23 %", "24 %", "25 %", "26 %", "27 %", "28 %", "29 %", "30 %", "31 %", "32 %", "33 %", "34 %", "35 %", "36 %", "37 %", "38 %", "39 %", "40 %", "41 %", "42 %", "43 %", "44 %", "45 %", "46 %", "47 %", "48 %", "49 %", "50 %", "51 %", "52 %", "53 %", "54 %", "55 %", "56 %", "57 %", "58 %", "59 %", "60 %", "61 %", "62 %", "63 %", "64 %", "65 %", "66 %", "67 %", "68 %", "69 %", "70 %", "71 %", "72 %", "73 %", "74 %", "75 %", "76 %", "77 %", "78 %", "79 %", "80 %", "81 %", "82 %", "83 %", "84 %", "85 %", "86 %", "87 %", "88 %", "89 %", "90 %", "91 %", "92 %", "93 %", "94 %", "95 %", "96 %", "97 %", "98 %", "99 %"};
+		comboBoxPercentage = new JComboBox(percentage);
+		comboBoxPercentage.addActionListener(this);
+		
+		this.add(panelOne, BorderLayout.NORTH);
+		this.add(panelTwo, BorderLayout.CENTER);
+		this.add(panelThree, BorderLayout.SOUTH);
+		
+		panelOne.add(labelOne);
+		panelOne.add(textFieldLoan);
+		panelOne.add(labelTwo);
+		panelOne.add(comboBoxYears);
+		panelOne.add(labelThree);
+		panelOne.add(comboBoxMonths);
+		panelOne.add(labelFour);
+		panelOne.add(comboBoxPercentage);
+		panelTwo.add(labelFive);
+		panelTwo.add(buttonAnuiteto);
+		panelTwo.add(buttonLinijinis);
+		panelThree.add(button);
+		
+		panelOne.setAlignmentX(Component.CENTER_ALIGNMENT);
+		
+		panelOne.setPreferredSize(new Dimension(800, 100));
+		panelTwo.setPreferredSize(new Dimension(800, 100));
+		panelThree.setPreferredSize(new Dimension(800, 100));
+		
+		this.pack(); //make sure components fit
+		this.setLocationRelativeTo(null);
+	}
+	
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		
+		if(e.getSource() == buttonAnuiteto) {
+			whichGraph = 1;
+			buttonAnuiteto.setEnabled(false);
+			buttonLinijinis.setEnabled(true);
+		}
+		if (e.getSource() == buttonLinijinis) {
+			whichGraph = 2;
+			buttonLinijinis.setEnabled(false);
+			buttonAnuiteto.setEnabled(true);
+		}
+		if(e.getSource() == comboBoxYears) {
+			year = comboBoxYears.getSelectedIndex() + 1;
+		}
+		if(e.getSource() == comboBoxMonths) {
+			month = comboBoxMonths.getSelectedIndex() + 1;
+		}
+		if(e.getSource() == comboBoxMonths) {
+			percentage = comboBoxPercentage.getSelectedIndex() + 1;
+		}
+		
+		if(e.getSource() == button) {
+			if (whichGraph == 0) {
+				System.out.println("Pasirinkite grafika pries ivykdant.");
+			}
+			else {
+				String loanSumString = textFieldLoan.getText();
+				try {
+					loanSum = Integer.parseInt(loanSumString);
+					System.out.println("Pageidautina paskolos suma: " + loanSum);
+					if (whichGraph == 1) {
+						System.out.println("Bus vaizduojamas anuiteto grafikas.");
+					}
+					else {
+						System.out.println("Bus vaizduojamas linijinis grafikas.");
+					}
+					
+					System.out.println("Paskola pageidautina grazinti per "+ year +" metu ir " + month + " menesiu");
+					System.out.println("Pasirinktas " + percentage + "% metinis procentas");
+					button.setEnabled(false);
+					textFieldLoan.setEditable(false);
+		
+				} catch (NumberFormatException ex) {
+					System.err.println("Netinkama ivestis. Iveskite tinkama paskolos suma.");
+				}
+				
+			}	
+		}
+	}
+}
