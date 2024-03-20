@@ -1,4 +1,6 @@
 package frame;
+import calculator.Calculator;
+
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,14 +17,17 @@ public class MyFrame extends JFrame implements ActionListener {
 	
 	JLabel labelOne, labelTwo, labelThree, labelFour, labelFive;
 	
-	JTextField textFieldLoan, textFieldTermYears, textFieldTermMonths, textFieldPercentage;
+	JTextField textFieldLoan, textFieldPercentage;
 	
-	JComboBox comboBoxMonths, comboBoxYears, comboBoxPercentage;
+	JComboBox comboBoxMonths, comboBoxYears;
 	
 	JButton button, buttonAnuiteto, buttonLinijinis;
-	int loanSum, whichGraph = 0, month = 0, year = 0, percentage = 1;
+	int whichGraph = 0, month = 0, year = 0; 
+	double loanSum, percentage;
 	
-	public MyFrame() {
+	Calculator calculator;
+	
+	public MyFrame() {	
 		this.setTitle("Busto paskolos skaiciuokle");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLayout(new BorderLayout());
@@ -66,6 +71,10 @@ public class MyFrame extends JFrame implements ActionListener {
 		textFieldLoan.setPreferredSize(new Dimension(100, 25));
 		textFieldLoan.setFont(new Font("Consolas ", Font.PLAIN, 15));
 		
+		textFieldPercentage = new JTextField();
+		textFieldPercentage.setPreferredSize(new Dimension(100, 25));
+		textFieldPercentage.setFont(new Font("Consolas ", Font.PLAIN, 15));
+		
 		Integer[] months = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
 		comboBoxMonths = new JComboBox(months);
 		comboBoxMonths.addActionListener(this);
@@ -73,10 +82,6 @@ public class MyFrame extends JFrame implements ActionListener {
 		Integer[] years = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50};
 		comboBoxYears = new JComboBox(years);
 		comboBoxYears.addActionListener(this);
-		
-		String[] percentage = {"1 %", "2 %", "3 %", "4 %", "5 %", "6 %", "7 %", "8 %", "9 %", "10 %", "11 %", "12 %", "13 %", "14 %", "15 %", "16 %", "17 %", "18 %", "19 %", "20 %", "21 %", "22 %", "23 %", "24 %", "25 %", "26 %", "27 %", "28 %", "29 %", "30 %", "31 %", "32 %", "33 %", "34 %", "35 %", "36 %", "37 %", "38 %", "39 %", "40 %", "41 %", "42 %", "43 %", "44 %", "45 %", "46 %", "47 %", "48 %", "49 %", "50 %", "51 %", "52 %", "53 %", "54 %", "55 %", "56 %", "57 %", "58 %", "59 %", "60 %", "61 %", "62 %", "63 %", "64 %", "65 %", "66 %", "67 %", "68 %", "69 %", "70 %", "71 %", "72 %", "73 %", "74 %", "75 %", "76 %", "77 %", "78 %", "79 %", "80 %", "81 %", "82 %", "83 %", "84 %", "85 %", "86 %", "87 %", "88 %", "89 %", "90 %", "91 %", "92 %", "93 %", "94 %", "95 %", "96 %", "97 %", "98 %", "99 %"};
-		comboBoxPercentage = new JComboBox(percentage);
-		comboBoxPercentage.addActionListener(this);
 		
 		this.add(panelOne, BorderLayout.NORTH);
 		this.add(panelTwo, BorderLayout.CENTER);
@@ -89,7 +94,7 @@ public class MyFrame extends JFrame implements ActionListener {
 		panelOne.add(labelThree);
 		panelOne.add(comboBoxMonths);
 		panelOne.add(labelFour);
-		panelOne.add(comboBoxPercentage);
+		panelOne.add(textFieldPercentage);
 		panelTwo.add(labelFive);
 		panelTwo.add(buttonAnuiteto);
 		panelTwo.add(buttonLinijinis);
@@ -103,6 +108,7 @@ public class MyFrame extends JFrame implements ActionListener {
 		
 		this.pack(); //make sure components fit
 		this.setLocationRelativeTo(null);
+		
 	}
 	
 	
@@ -125,18 +131,16 @@ public class MyFrame extends JFrame implements ActionListener {
 		if(e.getSource() == comboBoxMonths) {
 			month = comboBoxMonths.getSelectedIndex() + 1;
 		}
-		if(e.getSource() == comboBoxMonths) {
-			percentage = comboBoxPercentage.getSelectedIndex() + 1;
-		}
-		
 		if(e.getSource() == button) {
 			if (whichGraph == 0) {
 				System.out.println("Pasirinkite grafika pries ivykdant.");
 			}
 			else {
 				String loanSumString = textFieldLoan.getText();
+				String percentageString = textFieldPercentage.getText();
 				try {
-					loanSum = Integer.parseInt(loanSumString);
+					loanSum = Double.parseDouble(loanSumString);
+					percentage = Double.parseDouble(percentageString);
 					System.out.println("Pageidautina paskolos suma: " + loanSum);
 					if (whichGraph == 1) {
 						System.out.println("Bus vaizduojamas anuiteto grafikas.");
@@ -149,10 +153,13 @@ public class MyFrame extends JFrame implements ActionListener {
 					System.out.println("Pasirinktas " + percentage + "% metinis procentas");
 					button.setEnabled(false);
 					textFieldLoan.setEditable(false);
+					calculator = new Calculator(whichGraph, month, year, loanSum, percentage);
 		
-				} catch (NumberFormatException ex) {
-					System.err.println("Netinkama ivestis. Iveskite tinkama paskolos suma.");
-				}
+				} 
+				catch (NumberFormatException ex) {
+					System.err.println("Netinkama ivestis. Paskolos suma ir metinis procentas turi buti realieji skaiciai.");
+					button.setEnabled(true);
+				}		
 				
 			}	
 		}
