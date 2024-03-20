@@ -1,4 +1,4 @@
-package loanCalculator;
+package frame;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,7 +22,7 @@ public class MyFrame extends JFrame implements ActionListener {
 	JButton button, buttonAnuiteto, buttonLinijinis;
 	int loanSum, whichGraph = 0, month = 0, year = 0, percentage = 1;
 	
-	MyFrame() {
+	public MyFrame() {
 		this.setTitle("Busto paskolos skaiciuokle");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLayout(new BorderLayout());
