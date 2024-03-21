@@ -126,10 +126,10 @@ public class MyFrame extends JFrame implements ActionListener {
 			buttonAnuiteto.setEnabled(true);
 		}
 		if(e.getSource() == comboBoxYears) {
-			year = comboBoxYears.getSelectedIndex() + 1;
+			year = comboBoxYears.getSelectedIndex();
 		}
 		if(e.getSource() == comboBoxMonths) {
-			month = comboBoxMonths.getSelectedIndex() + 1;
+			month = comboBoxMonths.getSelectedIndex();
 		}
 		if(e.getSource() == button) {
 			if (whichGraph == 0) {
