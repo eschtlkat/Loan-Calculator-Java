@@ -1,5 +1,7 @@
 package frame;
 import calculator.Calculator;
+//import calculator.SecondFrame;
+import calculator.SecondFrame;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -12,29 +14,27 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 
 public class MyFrame extends JFrame implements ActionListener {
-	
+
 	JPanel panelOne,panelTwo, panelThree;
 	
 	JLabel labelOne, labelTwo, labelThree, labelFour, labelFive;
 	
 	JTextField textFieldLoan, textFieldPercentage;
 	
-	JComboBox comboBoxMonths, comboBoxYears;
+	JComboBox<Integer> comboBoxMonths, comboBoxYears;
 	
 	JButton button, buttonAnuiteto, buttonLinijinis;
 	int whichGraph = 0, month = 0, year = 0; 
 	double loanSum, percentage;
 	
+	ImageIcon image;
+	
 	Calculator calculator;
 	
 	public MyFrame() {	
 		this.setTitle("Busto paskolos skaiciuokle");
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setLayout(new BorderLayout());
-		this.setSize(800,600); //sets the x-dimension and y=dimension;
-		this.setResizable(false); //prevent this from being resized
-		this.setVisible(true);
-		ImageIcon image = new ImageIcon("C:\\Users\\laura\\eclipse-workspace\\loanCalculator\\src\\a.jpg"); //create an image icon
+		
+		image = new ImageIcon("C:\\Users\\laura\\eclipse-workspace\\loanCalculator\\src\\a.jpg"); //create an image icon
 		this.setIconImage(image.getImage()); //change icon of this
 		this.getContentPane().setBackground(Color.lightGray); //change color of background
 		
@@ -108,6 +108,7 @@ public class MyFrame extends JFrame implements ActionListener {
 		
 		this.pack(); //make sure components fit
 		this.setLocationRelativeTo(null);
+		this.show();
 		
 	}
 	
@@ -154,6 +155,9 @@ public class MyFrame extends JFrame implements ActionListener {
 					button.setEnabled(false);
 					textFieldLoan.setEditable(false);
 					calculator = new Calculator(whichGraph, month, year, loanSum, percentage);
+					this.dispose();
+					SecondFrame secondFrame = new SecondFrame(calculator.monthsDisplay, calculator.monthlyPay,
+			                calculator.interest, calculator.leftToPay, calculator.loanSumAll);
 		
 				} 
 				catch (NumberFormatException ex) {

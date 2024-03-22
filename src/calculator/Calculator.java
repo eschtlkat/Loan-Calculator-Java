@@ -3,18 +3,18 @@ package calculator;
 import java.util.ArrayList;
 
 public class Calculator{
-	int whichGraph, month, year; 
-	double loanSum, percentage;
+	protected int whichGraph, month, year; 
+	protected double loanSum, percentage;
 	
 	////new
-	int allMonths;
+	protected int allMonths;
 	
-	double loanSumLeft, loanSumAll;
+	public double loanSumLeft, loanSumAll;
 	
-	ArrayList<Integer> monthsDisplay;
-	ArrayList<Double> monthlyPay;
-	ArrayList<Double> leftToPay;
-	ArrayList<Double> interest;	
+	public ArrayList<Integer> monthsDisplay;
+	public ArrayList<Double> monthlyPay;
+	public ArrayList<Double> leftToPay;
+	public ArrayList<Double> interest;	
 	
 	public Calculator(int whichGraph, int month, int year, double loanSum, double percentage) {
 		this.whichGraph = whichGraph;
@@ -22,9 +22,6 @@ public class Calculator{
 		this.year = year;
 		this.loanSum = loanSum;
 		this.percentage = percentage;
-		
-		loanSumLeft = loanSum;
-		loanSumAll = loanSum;
 		
 		allMonths = year * 12 + month;
 		monthsDisplay = new ArrayList<Integer>(); // Create an ArrayList
@@ -37,7 +34,17 @@ public class Calculator{
 		
 	}
 	
+	public Calculator(ArrayList<Integer> monthsDisplay, ArrayList<Double> monthlyPay, ArrayList<Double> interest, ArrayList<Double> leftToPay, double loanSumAll) {
+		this.monthsDisplay = monthsDisplay;
+		this.monthlyPay = monthlyPay;
+		this.interest = interest;
+		this.leftToPay = leftToPay;
+		this.loanSumAll = loanSumAll;
+}
+	
 	public void calculatePayments() {
+		loanSumLeft = this.loanSum;
+		loanSumAll = this.loanSum;
 		leftToPay.add(loanSumLeft);
 		for (int i = 1; i <= allMonths; i++) {
 			
@@ -47,7 +54,7 @@ public class Calculator{
 			monthlyPayment = Math.round(monthlyPayment * 100.0) / 100.0; 
 			monthlyPay.add(monthlyPayment);
 			
-			double inter = loanSumLeft * this.percentage / 100;
+			double inter = loanSumLeft * (this.percentage / 12 / 100);
 			inter = Math.round(inter * 100.0) / 100.0;
 			interest.add(inter);
 			loanSumAll += inter;

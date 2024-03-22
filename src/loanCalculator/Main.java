@@ -7,9 +7,9 @@ import javax.swing.JFrame;
 
 import frame.MyFrame;
 
-public class main {
+public class Main {
 
-	public static void main(String[] args) {
+	public static void main (String[] args) {
 		
 		MyFrame frame = new MyFrame();
 
