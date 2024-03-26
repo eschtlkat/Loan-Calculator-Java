@@ -47,7 +47,7 @@ public class lineGraph extends Application {
 
         // Creating a scene
         HBox hbox = new HBox();
-        hbox.getChildren().add(new Button("TEkstaws"));
+        hbox.getChildren().add(new Button());
         Scene scene = new Scene(hbox, 800, 600);
 
         // Setting the scene

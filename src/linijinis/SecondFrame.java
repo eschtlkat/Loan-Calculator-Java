@@ -2,6 +2,8 @@ package linijinis;
 
 import java.awt.Dimension;
 import linijinis.lineGraph;
+import loanCalculator.afterMain;
+
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Color;
@@ -79,7 +81,8 @@ public class SecondFrame extends Calculator implements ChangeListener, ActionLis
 		
 		postponement();
 		
-		launchJavaFXGraph(monthsDisplay, monthlyPay);
+		//launchJavaFXGraph(monthsDisplay, monthlyPay);
+		afterMain.run();
 		
 		frame.setVisible(true);
 		
@@ -87,7 +90,7 @@ public class SecondFrame extends Calculator implements ChangeListener, ActionLis
 		
 	}
 	
-	private void launchJavaFXGraph(ArrayList<Integer> monthsDisplay, ArrayList<Double> monthlyPay) {
+	/*private void launchJavaFXGraph(ArrayList<Integer> monthsDisplay, ArrayList<Double> monthlyPay) {
         JFXPanel fxPanel = new JFXPanel();
         frame.add(fxPanel);
 
@@ -97,7 +100,7 @@ public class SecondFrame extends Calculator implements ChangeListener, ActionLis
             lineGraph.start(stage);
             fxPanel.setScene(stage.getScene());
         });
-    }
+    }*/
 	
 	public void postponement() {
 		panelPostpone = new JPanel();

@@ -11,8 +11,8 @@ public class Calculator{
 	
 	public double loanSumLeft, loanSumAll;
 	
-	public ArrayList<Integer> monthsDisplay;
-	public ArrayList<Double> monthlyPay;
+	public static ArrayList<Integer> monthsDisplay;
+	public static ArrayList<Double> monthlyPay;
 	public ArrayList<Double> leftToPay;
 	public ArrayList<Double> interest;	
 	
