@@ -64,6 +64,7 @@ public class Calculator{
 			leftToPay.add(loanSumLeft);
 			
 		}
+		
 	}
 	
 	public void updateTable() {

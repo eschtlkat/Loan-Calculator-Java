@@ -1,6 +1,7 @@
 package linijinis;
 
 import java.awt.Dimension;
+import linijinis.lineGraph;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Color;
@@ -20,6 +21,13 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+
+
 public class SecondFrame extends Calculator implements ChangeListener, ActionListener{
 	
 	JFrame frame = new JFrame();
@@ -35,8 +43,7 @@ public class SecondFrame extends Calculator implements ChangeListener, ActionLis
 	JTextField TextFieldfrom, TextFieldhowLong, TextFieldYearlyPercentage;
 	
 	JButton submit;
-	
-	
+
 	int from, howLong;
 	double yearlyPercentage;
 	
@@ -52,6 +59,7 @@ public class SecondFrame extends Calculator implements ChangeListener, ActionLis
 		frame.setResizable(false);
 		
 		frame.setLocationRelativeTo(null);
+		
 		
 		createTable();
 		
@@ -71,15 +79,25 @@ public class SecondFrame extends Calculator implements ChangeListener, ActionLis
 		
 		postponement();
 		
+		launchJavaFXGraph(monthsDisplay, monthlyPay);
+		
 		frame.setVisible(true);
 		
 		
 		
 	}
 	
-	public void lineChart() {
-		
-	}
+	private void launchJavaFXGraph(ArrayList<Integer> monthsDisplay, ArrayList<Double> monthlyPay) {
+        JFXPanel fxPanel = new JFXPanel();
+        frame.add(fxPanel);
+
+        Platform.runLater(() -> {
+            lineGraph lineGraph = new lineGraph(monthsDisplay, monthlyPay);
+            Stage stage = new Stage();
+            lineGraph.start(stage);
+            fxPanel.setScene(stage.getScene());
+        });
+    }
 	
 	public void postponement() {
 		panelPostpone = new JPanel();
@@ -155,7 +173,7 @@ public class SecondFrame extends Calculator implements ChangeListener, ActionLis
         
         for (int i = 0; i < monthsDisplay.size(); i++) {
         	int month = monthsDisplay.get(i);
-        	model1.addRow(new Object[]{month, monthlyPay.get(i) + interest.get(i), interest.get(i), leftToPay.get(i)});
+        	model1.addRow(new Object[]{month, monthlyPay.get(i) , interest.get(i), leftToPay.get(i)});
         }
 
         // Add the table to a scroll pane

@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import javax.swing.JTextField;
 
+import anuitetinis.calculatorAnuit;
 import linijinis.Calculator;
 import linijinis.SecondFrame;
 
@@ -29,7 +30,9 @@ public class MyFrame extends JFrame implements ActionListener {
 	
 	ImageIcon image;
 	
-	Calculator calculator;
+	Calculator calculator1;
+	calculatorAnuit calculator2;
+	
 	
 	public MyFrame() {	
 		this.setTitle("Busto paskolos skaiciuokle");
@@ -155,18 +158,16 @@ public class MyFrame extends JFrame implements ActionListener {
 					button.setEnabled(false);
 					textFieldLoan.setEditable(false);
 					if (whichGraph == 2) {
-						calculator = new Calculator(whichGraph, month, year, loanSum, percentage);
+						calculator1 = new Calculator(whichGraph, month, year, loanSum, percentage);
 						this.dispose();
-						SecondFrame secondFrame = new SecondFrame(calculator.monthsDisplay, calculator.monthlyPay,
-				                calculator.interest, calculator.leftToPay, calculator.loanSumAll);
+						SecondFrame secondFrame = new SecondFrame(calculator1.monthsDisplay, calculator1.monthlyPay,
+				                calculator1.interest, calculator1.leftToPay, calculator1.loanSumAll);
 					}
 					else if (whichGraph == 1) {
-						System.out.println("Pasirinkote anuitetini kurio dar nera");
-						System.exit(0);
-					}
-					else {
-						System.out.println("Kas cia");
-						System.exit(0);
+						calculator2 = new calculatorAnuit(whichGraph, month, year, loanSum, percentage);
+						this.dispose();
+						SecondFrame secondFrame = new SecondFrame(calculator2.monthsDisplay, calculator2.monthlyPay,
+				                calculator2.interest, calculator2.leftToPay, calculator2.loanSumAll);
 					}
 					
 		
