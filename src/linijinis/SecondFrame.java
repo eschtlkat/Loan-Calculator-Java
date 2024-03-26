@@ -1,8 +1,9 @@
-package calculator;
+package linijinis;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -25,13 +26,16 @@ public class SecondFrame extends Calculator implements ChangeListener, ActionLis
 	JTable table;
 	DefaultTableModel model1, model2;
 	
+	JPanel panelPostpone;
+	
 	JSlider sliderFrom, sliderTo;
 	
-	JLabel filter, postpone;
+	JLabel filter, postpone, postponeFrom, postponeHowLong, postponeYearlyPercentage;
 	
 	JTextField TextFieldfrom, TextFieldhowLong, TextFieldYearlyPercentage;
 	
 	JButton submit;
+	
 	
 	int from, howLong;
 	double yearlyPercentage;
@@ -43,7 +47,7 @@ public class SecondFrame extends Calculator implements ChangeListener, ActionLis
 		
 		super(monthsDisplay, monthlyPay, interest, leftToPay, loanSumAll);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(500, 800);
+		frame.setSize(510, 800);
 		frame.setLayout(new FlowLayout(FlowLayout.LEFT));
 		frame.setResizable(false);
 		
@@ -73,7 +77,16 @@ public class SecondFrame extends Calculator implements ChangeListener, ActionLis
 		
 	}
 	
+	public void lineChart() {
+		
+	}
+	
 	public void postponement() {
+		panelPostpone = new JPanel();
+		panelPostpone.setBackground(Color.white);
+		panelPostpone.setLayout(new FlowLayout(FlowLayout.CENTER));
+		panelPostpone.setPreferredSize(new Dimension(500, 300));
+		
 		postpone = new JLabel("Atideti mokejima");
 		postpone.setHorizontalTextPosition(JLabel.CENTER);
 		postpone.setFont(new Font("MV BOLI", Font.PLAIN, 28));
@@ -91,14 +104,28 @@ public class SecondFrame extends Calculator implements ChangeListener, ActionLis
 		TextFieldYearlyPercentage.setPreferredSize(new Dimension(100, 25));
 		TextFieldYearlyPercentage.setFont(new Font("Consolas ", Font.PLAIN, 15));
 		
+		postponeFrom = new JLabel("Nuo kurio menesio?");
+		postponeFrom.setFont(new Font("MV BOLI", Font.PLAIN, 10));
+		postponeHowLong = new JLabel("Kiek menesiu?");
+		postponeHowLong.setFont(new Font("MV BOLI", Font.PLAIN, 10));
+		postponeYearlyPercentage = new JLabel("Metinis atidejimo procentas");
+		postponeYearlyPercentage.setFont(new Font("MV BOLI", Font.PLAIN, 10));
+		
+		
 		submit = new JButton("Vykdyti");
 		submit.addActionListener(this);
 		
-		frame.add(postpone);
-		frame.add(TextFieldfrom);
-		frame.add(TextFieldhowLong);
-		frame.add(TextFieldYearlyPercentage);		
-		frame.add(submit);
+		
+		panelPostpone.add(postpone);
+		panelPostpone.add(postponeFrom);
+		panelPostpone.add(TextFieldfrom);
+		panelPostpone.add(postponeHowLong);
+		panelPostpone.add(TextFieldhowLong);
+		panelPostpone.add(postponeYearlyPercentage);
+		panelPostpone.add(TextFieldYearlyPercentage);		
+		panelPostpone.add(submit);
+		
+		frame.add(panelPostpone);
 		
 	}
 	
@@ -128,7 +155,7 @@ public class SecondFrame extends Calculator implements ChangeListener, ActionLis
         
         for (int i = 0; i < monthsDisplay.size(); i++) {
         	int month = monthsDisplay.get(i);
-        	model1.addRow(new Object[]{month, monthlyPay.get(i), interest.get(i), leftToPay.get(i)});
+        	model1.addRow(new Object[]{month, monthlyPay.get(i) + interest.get(i), interest.get(i), leftToPay.get(i)});
         }
 
         // Add the table to a scroll pane
@@ -140,7 +167,7 @@ public class SecondFrame extends Calculator implements ChangeListener, ActionLis
 		model1.setRowCount(0);
 		for (int i = sliderFrom.getValue(); i <= sliderTo.getValue(); i++) {
         	int month = monthsDisplay.get(i);
-        	model1.addRow(new Object[]{month, monthlyPay.get(i), interest.get(i), leftToPay.get(i)});
+        	model1.addRow(new Object[]{month, monthlyPay.get(i) + interest.get(i), interest.get(i), leftToPay.get(i)});
         }
 	}
 	
@@ -197,6 +224,7 @@ public class SecondFrame extends Calculator implements ChangeListener, ActionLis
 				yearlyPercentage = Double.parseDouble(yearlyPercentageString);
 				
 				updateTablePostpone(from, howLong, yearlyPercentage);
+				updateTableFilter(sliderFrom, sliderTo);
 				submit.setEnabled(false);
 
 			}

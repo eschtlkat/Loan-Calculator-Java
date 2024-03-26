@@ -1,4 +1,4 @@
-package calculator;
+package linijinis;
 
 import java.util.ArrayList;
 

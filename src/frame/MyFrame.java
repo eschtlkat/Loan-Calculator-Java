@@ -1,8 +1,4 @@
 package frame;
-import calculator.Calculator;
-//import calculator.SecondFrame;
-import calculator.SecondFrame;
-
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,6 +7,10 @@ import javax.swing.JFrame;
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.JTextField;
+
+import linijinis.Calculator;
+import linijinis.SecondFrame;
+
 import javax.swing.JButton;
 
 public class MyFrame extends JFrame implements ActionListener {
@@ -154,10 +154,21 @@ public class MyFrame extends JFrame implements ActionListener {
 					System.out.println("Pasirinktas " + percentage + "% metinis procentas");
 					button.setEnabled(false);
 					textFieldLoan.setEditable(false);
-					calculator = new Calculator(whichGraph, month, year, loanSum, percentage);
-					this.dispose();
-					SecondFrame secondFrame = new SecondFrame(calculator.monthsDisplay, calculator.monthlyPay,
-			                calculator.interest, calculator.leftToPay, calculator.loanSumAll);
+					if (whichGraph == 2) {
+						calculator = new Calculator(whichGraph, month, year, loanSum, percentage);
+						this.dispose();
+						SecondFrame secondFrame = new SecondFrame(calculator.monthsDisplay, calculator.monthlyPay,
+				                calculator.interest, calculator.leftToPay, calculator.loanSumAll);
+					}
+					else if (whichGraph == 1) {
+						System.out.println("Pasirinkote anuitetini kurio dar nera");
+						System.exit(0);
+					}
+					else {
+						System.out.println("Kas cia");
+						System.exit(0);
+					}
+					
 		
 				} 
 				catch (NumberFormatException ex) {
