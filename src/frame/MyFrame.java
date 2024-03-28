@@ -160,7 +160,7 @@ public class MyFrame extends JFrame implements ActionListener {
 					if (whichGraph == 2) {
 						calculator1 = new Calculator(whichGraph, month, year, loanSum, percentage);
 						this.dispose();
-						SecondFrame secondFrame = new SecondFrame(calculator1.monthsDisplay, calculator1.monthlyPay,
+						SecondFrame secondFrame = new SecondFrame(Calculator.monthsDisplay, Calculator.monthlyPay,
 				                calculator1.interest, calculator1.leftToPay, calculator1.loanSumAll);
 					}
 					else if (whichGraph == 1) {

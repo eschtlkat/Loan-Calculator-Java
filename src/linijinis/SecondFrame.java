@@ -44,12 +44,14 @@ public class SecondFrame extends Calculator implements ChangeListener, ActionLis
 	
 	JTextField TextFieldfrom, TextFieldhowLong, TextFieldYearlyPercentage;
 	
-	JButton submit;
+	JButton submit, showGraph;
 
 	int from, howLong;
 	double yearlyPercentage;
 	
 	double loanSumLeft;
+	
+	int firstGraph = 0;
 
 	public SecondFrame(ArrayList<Integer> monthsDisplay, ArrayList<Double> monthlyPay, 
             ArrayList<Double> interest, ArrayList<Double> leftToPay, double loanSumAll) {
@@ -71,36 +73,27 @@ public class SecondFrame extends Calculator implements ChangeListener, ActionLis
 		frame.add(filter);
 		
 		sliderFrom = new JSlider();
+		sliderFrom.setMaximum(Calculator.allMonths);
 		sliderFrom.setValue(0);
 		
+		System.out.println("all months: "+Calculator.allMonths);
+		
 		sliderTo = new JSlider();
-		sliderTo.setValue(monthsDisplay.size() - 1);
+		sliderTo.setMaximum(Calculator.allMonths);
+		sliderTo.setValue(Calculator.allMonths);
 		
 		formatSlider(sliderFrom);
 		formatSlider(sliderTo);
 		
 		postponement();
 		
-		//launchJavaFXGraph(monthsDisplay, monthlyPay);
-		afterMain.run();
+		
 		
 		frame.setVisible(true);
 		
 		
 		
 	}
-	
-	/*private void launchJavaFXGraph(ArrayList<Integer> monthsDisplay, ArrayList<Double> monthlyPay) {
-        JFXPanel fxPanel = new JFXPanel();
-        frame.add(fxPanel);
-
-        Platform.runLater(() -> {
-            lineGraph lineGraph = new lineGraph(monthsDisplay, monthlyPay);
-            Stage stage = new Stage();
-            lineGraph.start(stage);
-            fxPanel.setScene(stage.getScene());
-        });
-    }*/
 	
 	public void postponement() {
 		panelPostpone = new JPanel();
@@ -152,8 +145,15 @@ public class SecondFrame extends Calculator implements ChangeListener, ActionLis
 	
 	public void formatSlider(JSlider slider) {
 		slider.setBounds(100, 50, 300, 50);
-		slider.setMaximum(monthsDisplay.size() - 1);
+		slider.setPaintTicks(true);
+		slider.setMinorTickSpacing(10);
+		slider.setPaintTrack(true);
+		slider.setMajorTickSpacing(50);
 		slider.addChangeListener(this);
+		slider.setPaintLabels(true);
+		slider.setFont(new Font("MV Boli", Font.PLAIN, 8));
+		
+		
 		frame.add(slider);
 	}
 	
@@ -182,13 +182,18 @@ public class SecondFrame extends Calculator implements ChangeListener, ActionLis
         // Add the table to a scroll pane
         JScrollPane scrollPane = new JScrollPane(table);
         panel.add(scrollPane);
-	}
+        
+        
+        showGraph = new JButton("Parodyti grafika");
+		showGraph.addActionListener(this);
+		frame.add(showGraph);
+		}
 	
 	public void updateTableFilter(JSlider sliderFrom, JSlider sliderTo) {
 		model1.setRowCount(0);
-		for (int i = sliderFrom.getValue(); i <= sliderTo.getValue(); i++) {
+		for (int i = sliderFrom.getValue(); i < sliderTo.getValue(); i++) {
         	int month = monthsDisplay.get(i);
-        	model1.addRow(new Object[]{month, monthlyPay.get(i) + interest.get(i), interest.get(i), leftToPay.get(i)});
+        	model1.addRow(new Object[]{month, monthlyPay.get(i), interest.get(i), leftToPay.get(i)});
         }
 	}
 	
@@ -196,29 +201,36 @@ public class SecondFrame extends Calculator implements ChangeListener, ActionLis
 		model1.setRowCount(0);
 		
 		// Ensure from is within bounds
-	    from = Math.max(0, from - 1); // Adjust from to be 0-based index
-	    howLong = Math.min(howLong, leftToPay.size() - from); // Adjust howLong accordingly
+	    //from = Math.max(0, from - 1); // Adjust from to be 0-based index
+	    //howLong = Math.min(howLong, leftToPay.size() - from); // Adjust howLong accordingly
 	    
-		System.out.println(from);
+	    
 		for (int i = from; i < howLong + from; i++) {
 			monthlyPay.set(i, (double) 0);
-			double tmp = leftToPay.get(0) * yearlyPercentage / 12;
+			double tmp = leftToPay.get(0) * yearlyPercentage / 100 / 12;
 			tmp = Math.round(tmp * 100.0) / 100.0; 
 			interest.set(i, tmp);
 		}
 		
 		loanSumLeft = leftToPay.get(from);
-		for (int i = from; i <  Math.min(from + howLong, leftToPay.size()); i++) {
+		for (int i = from; i <  from + howLong; i++) {
 			leftToPay.set(i, loanSumLeft);
-			loanSumLeft -= monthlyPay.get(i);
+			//loanSumLeft -= monthlyPay.get(i);
 		}
-		
 		
 		for (int i = 0; i < monthsDisplay.size(); i++) {
         	int month = monthsDisplay.get(i);
+        	
+        	
         	model1.addRow(new Object[]{month, monthlyPay.get(i), interest.get(i), leftToPay.get(i)});
         }
-		
+	}
+	
+	public void updateMonthsDisplayFilter(ArrayList<Integer> monthsDisplay, JSlider sliderFrom, JSlider sliderTo) {
+		monthsDisplay.clear();
+		for (int i = sliderFrom.getValue(); i <= sliderTo.getValue(); i++) {
+			monthsDisplay.add(i +1);
+		}
 		
 	}
 	
@@ -254,7 +266,33 @@ public class SecondFrame extends Calculator implements ChangeListener, ActionLis
 				submit.setEnabled(true);
 			}
 		}
+		
+		if (e.getSource() == showGraph) {
+			if (firstGraph == 0) {
+				firstGraph++;
+				System.out.println("Pateko i 1");
+				Platform.setImplicitExit(false);
+				Platform.runLater(() -> { 
+
+					afterMain.doing();
+
+			      });   
+			}
+			else {
+				firstGraph++;
+				System.out.println("Pateko i 2");
+				updateMonthsDisplayFilter(monthsDisplay, sliderFrom, sliderTo);
+				//updateTablePostpone(from, howLong, yearlyPercentage);
+				Platform.setImplicitExit(false);
+				Platform.runLater(() -> { 
+
+					afterMain.doing();
+
+			      });   
+			}
+		}
 	}
+	
 	
 	
 	

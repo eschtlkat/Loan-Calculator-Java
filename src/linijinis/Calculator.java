@@ -7,7 +7,7 @@ public class Calculator{
 	protected double loanSum, percentage;
 	
 	////new
-	protected int allMonths;
+	protected static int allMonths;
 	
 	public double loanSumLeft, loanSumAll;
 	
@@ -35,8 +35,8 @@ public class Calculator{
 	}
 	
 	public Calculator(ArrayList<Integer> monthsDisplay, ArrayList<Double> monthlyPay, ArrayList<Double> interest, ArrayList<Double> leftToPay, double loanSumAll) {
-		this.monthsDisplay = monthsDisplay;
-		this.monthlyPay = monthlyPay;
+		Calculator.monthsDisplay = monthsDisplay;
+		Calculator.monthlyPay = monthlyPay;
 		this.interest = interest;
 		this.leftToPay = leftToPay;
 		this.loanSumAll = loanSumAll;
