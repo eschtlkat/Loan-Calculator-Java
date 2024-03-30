@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 public class Calculator{
 	protected int whichGraph, month, year; 
-	protected double loanSum, percentage;
+	protected static double loanSum;
+	protected static double percentage;
 	
 	////new
 	protected static int allMonths;
@@ -30,7 +31,7 @@ public class Calculator{
 		interest = new ArrayList<Double>();
 		
 		calculatePayments();
-		updateTable();
+		//updateTable();
 		
 	}
 	
@@ -45,7 +46,6 @@ public class Calculator{
 	public void calculatePayments() {
 		loanSumLeft = this.loanSum;
 		loanSumAll = this.loanSum;
-		leftToPay.add(loanSumLeft);
 		for (int i = 1; i <= allMonths; i++) {
 			
 			monthsDisplay.add(i);
@@ -59,15 +59,14 @@ public class Calculator{
 			interest.add(inter);
 			loanSumAll += inter;
 			
+			leftToPay.add(loanSumLeft);
 			loanSumLeft -= monthlyPayment;
 			loanSumLeft = Math.round(loanSumLeft * 100.0) / 100.0; 
-			leftToPay.add(loanSumLeft);
-			
 		}
 		
 	}
 	
-	public void updateTable() {
+	/*public void updateTable() {
 		for (int i = 0; i < monthsDisplay.size(); i++) {
 			System.out.print("Menesis: " + monthsDisplay.get(i));
 			System.out.print(" Ismoka: " + monthlyPay.get(i));
@@ -75,6 +74,6 @@ public class Calculator{
 			System.out.println(" Liko moketi: " + leftToPay.get(i));	
 		}
 		System.out.println("Visa grazinama suma: " + loanSumAll);
-	}
+	}*/
 
 }

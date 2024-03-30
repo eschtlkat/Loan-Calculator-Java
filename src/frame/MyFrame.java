@@ -9,6 +9,7 @@ import java.awt.*;
 import javax.swing.JTextField;
 
 import anuitetinis.calculatorAnuit;
+import anuitetinis.secondFrameAnuit;
 import linijinis.Calculator;
 import linijinis.SecondFrame;
 
@@ -166,7 +167,7 @@ public class MyFrame extends JFrame implements ActionListener {
 					else if (whichGraph == 1) {
 						calculator2 = new calculatorAnuit(whichGraph, month, year, loanSum, percentage);
 						this.dispose();
-						SecondFrame secondFrame = new SecondFrame(calculator2.monthsDisplay, calculator2.monthlyPay,
+						secondFrameAnuit secondFrame = new secondFrameAnuit(Calculator.monthsDisplay, Calculator.monthlyPay,
 				                calculator2.interest, calculator2.leftToPay, calculator2.loanSumAll);
 					}
 					
