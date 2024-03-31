@@ -5,7 +5,6 @@ import loanCalculator.afterMain;
 
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,7 +21,6 @@ import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
-import java.io.*;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 
@@ -33,9 +31,9 @@ public class SecondFrame extends Calculator implements ChangeListener, ActionLis
 	
 	JFrame frame = new JFrame();
 	JTable table;
-	DefaultTableModel model1, model2;
+	DefaultTableModel model1;
 	
-	JPanel panelPostpone, panelSaveData;
+	JPanel panelPostpone;
 	
 	JSlider sliderFrom, sliderTo;
 	
@@ -60,9 +58,7 @@ public class SecondFrame extends Calculator implements ChangeListener, ActionLis
 		frame.setSize(510, 800);
 		frame.setLayout(new FlowLayout(FlowLayout.LEFT));
 		frame.setResizable(false);
-		
 		frame.setLocationRelativeTo(null);
-		
 		
 		createTable();
 		
@@ -76,8 +72,6 @@ public class SecondFrame extends Calculator implements ChangeListener, ActionLis
 		sliderFrom.setMaximum(Calculator.allMonths);
 		sliderFrom.setValue(1);
 		
-		//System.out.println("all months: "+Calculator.allMonths);
-		
 		sliderTo = new JSlider();
 		sliderTo.setMinimum(1);
 		sliderTo.setMaximum(Calculator.allMonths);
@@ -88,11 +82,7 @@ public class SecondFrame extends Calculator implements ChangeListener, ActionLis
 		
 		postponement();
 		
-		
-		frame.setVisible(true);
-		
-		
-		
+		frame.setVisible(true);	
 	}
 	
 	public void postponement() {
@@ -100,40 +90,29 @@ public class SecondFrame extends Calculator implements ChangeListener, ActionLis
 		panelPostpone.setBackground(Color.white);
 		panelPostpone.setLayout(new FlowLayout(FlowLayout.CENTER));
 		panelPostpone.setPreferredSize(new Dimension(500, 300));
-		
 		postpone = new JLabel("Atideti mokejima");
 		postpone.setHorizontalTextPosition(JLabel.CENTER);
 		postpone.setFont(new Font("MV BOLI", Font.PLAIN, 28));
 		frame.add(postpone);
-		
 		TextFieldfrom = new JTextField();
 		TextFieldfrom.setPreferredSize(new Dimension(100, 25));
 		TextFieldfrom.setFont(new Font("Consolas ", Font.PLAIN, 15));
-		
 		TextFieldhowLong = new JTextField();
 		TextFieldhowLong.setPreferredSize(new Dimension(100, 25));
 		TextFieldhowLong.setFont(new Font("Consolas ", Font.PLAIN, 15));
-		
 		TextFieldYearlyPercentage = new JTextField();
 		TextFieldYearlyPercentage.setPreferredSize(new Dimension(100, 25));
 		TextFieldYearlyPercentage.setFont(new Font("Consolas ", Font.PLAIN, 15));
-		
 		postponeFrom = new JLabel("Nuo kurio menesio?");
 		postponeFrom.setFont(new Font("MV BOLI", Font.PLAIN, 10));
 		postponeHowLong = new JLabel("Kiek menesiu?");
 		postponeHowLong.setFont(new Font("MV BOLI", Font.PLAIN, 10));
 		postponeYearlyPercentage = new JLabel("Metinis atidejimo procentas");
 		postponeYearlyPercentage.setFont(new Font("MV BOLI", Font.PLAIN, 10));
-		
-		
 		submit = new JButton("Vykdyti");
 		submit.addActionListener(this);
-		
 		saveData = new JButton("Issaugoti ataskaita faile");
 		saveData.addActionListener(this);
-		
-		
-		
 		panelPostpone.add(postpone);
 		panelPostpone.add(postponeFrom);
 		panelPostpone.add(TextFieldfrom);
@@ -143,7 +122,6 @@ public class SecondFrame extends Calculator implements ChangeListener, ActionLis
 		panelPostpone.add(TextFieldYearlyPercentage);		
 		panelPostpone.add(submit);
 		panelPostpone.add(saveData);
-		
 		frame.add(panelPostpone);
 		
 	}
@@ -157,8 +135,6 @@ public class SecondFrame extends Calculator implements ChangeListener, ActionLis
 		slider.addChangeListener(this);
 		slider.setPaintLabels(true);
 		slider.setFont(new Font("MV Boli", Font.PLAIN, 8));
-		
-		
 		frame.add(slider);
 	}
 	
@@ -195,99 +171,40 @@ public class SecondFrame extends Calculator implements ChangeListener, ActionLis
 		
 		}
 	
-	public void updateTableFilter(JSlider sliderFrom, JSlider sliderTo) {
-		model1.setRowCount(0);
-		
-		System.out.println("SliderFrom pateko: " + sliderFrom.getValue());
-		System.out.println("SliderTo pateko: " + sliderTo.getValue());
-		
-		for (int i = sliderFrom.getValue(); i <= sliderTo.getValue(); i++) {
-        	int month = i;
-        	model1.addRow(new Object[]{month, monthlyPay.get(i - 1), interest.get(i - 1), leftToPay.get(i - 1)});
-        }
-	}
-	
-	public void updateMonthsDisplayFilter(ArrayList<Integer> monthsDisplay, JSlider sliderFrom, JSlider sliderTo) {
+	public void updateMonthsDisplay(ArrayList<Integer> monthsDisplay, JSlider sliderFrom, JSlider sliderTo) {
 		monthsDisplay.clear();
-		//System.out.println("SliderFrom: " + sliderFrom.getValue());
-		//System.out.println("SliderTo: " + sliderTo.getValue());
+		
 		for (int i = sliderFrom.getValue(); i <= sliderTo.getValue(); i++) {
 			monthsDisplay.add(i);
-			System.out.println("monthsDisplay value: "+ i);
 		}
 	}
 	
-	public void updateTablePostpone (int from, int howLong, double yearlyPercentage) {
+	public void updateTable(ArrayList<Integer> monthsDisplay) {
 		model1.setRowCount(0);
-		leftToPay.clear();
-		
-		///////////////////debug
-		System.out.println("BEFOREupdateTablePostpone: MonthDisplay size: " + monthsDisplay.size());
-		System.out.println("BEFOREupdateTablePostpone:MonthlPay size" + monthlyPay.size());
-		System.out.println("BEFOREupdateTablePostpone:leftToPay size "+ leftToPay.size());
-		System.out.println("BEFOREupdateTablePostpone:Interest size: " + interest.size());
-		System.out.println("BEFOREupdateTablePostpone: MonthDisplay index 0: " + monthsDisplay.get(0));
-		
-		loanSumLeft = Calculator.loanSum;
-		
 		for (int i = 0; i < monthsDisplay.size(); i++) {
-			if (i < from - 1 || i >= from + howLong - 1 || (howLong == 0 && from == 0)) {
-				double monthlyPayment = Calculator.loanSum / (allMonths - howLong + 1);
-				monthlyPayment = Math.round(monthlyPayment * 100.0) / 100.0; 
-				monthlyPay.set(i, monthlyPayment);
-				
-				double inter = loanSumLeft * Calculator.percentage / 12 / 100;
-				inter = Math.round(inter * 100.0) / 100.0;
-				interest.set(i, inter);
-				
-				loanSumLeft -= monthlyPayment;
-				loanSumLeft = Math.round(loanSumLeft * 100.0) / 100.0; 
-				leftToPay.add(loanSumLeft);
-				
-				//skaicuojam kitam kartui
-				monthlyPayment = loanSumLeft / allMonths;
-			}
-			else if (i >= from - 1 && i < from + howLong - 1) { 
-				monthlyPay.set(i, (double) 0);
-				double tmp = Calculator.loanSum * yearlyPercentage / 100 / 12;
-				tmp = Math.round(tmp * 100.0) / 100.0; 
-				interest.set(i, tmp);
-				
-				leftToPay.add(leftToPay.get(from - 2));
-			}
-			
-			
-		}
-		
-		///////////////////debug
-		System.out.println("AFTERupdateTablePostpone: MonthDisplay size: " + monthsDisplay.size());
-		System.out.println("AFTERupdateTablePostpone:MonthlPay size" + monthlyPay.size());
-		System.out.println("AFTERupdateTablePostpone:leftToPay size "+ leftToPay.size());
-		System.out.println("AFTERupdateTablePostpone:Interest size: " + interest.size());
-		System.out.println("AFTERupdateTablePostpone: MonthDisplay index 0: " + monthsDisplay.get(0));
-		
-		
-		
-		//System.out.println("Left to pay size: " + leftToPay.size());
-		//System.out.println("3: MonthDisplay index 0: " + monthsDisplay.get(0));
-		for (int i = 0; i < monthsDisplay.size(); i++) {
-			int month;
-			if (i == monthsDisplay.size() - 1) {
-			month = allMonths;
-			}
-			else {
-				month = monthsDisplay.get(i + 1);
-			}
-        	model1.addRow(new Object[]{monthsDisplay.get(i), monthlyPay.get(i), interest.get(i), leftToPay.get(i)});
+			int index = monthsDisplay.get(i) - 1;
+        	model1.addRow(new Object[]{monthsDisplay.get(i), monthlyPay.get(index), interest.get(index), leftToPay.get(index)});
         }
-		//System.out.println("4: MonthDisplay index 0: " + monthsDisplay.get(0));
+	}
+	
+	public void updatePostpone (int from, int howLong, double yearlyPercentage) {
+		for (int i = 0; i < allMonths; i++) {
+			if(from!= 0 && howLong != 0) {
+				if (i >= from - 1 && i < from + howLong - 1) { 
+					monthlyPay.set(i, (double) 0);
+					double tmp = Calculator.loanSum * yearlyPercentage / 100 / 12;
+					tmp = Math.round(tmp * 100.0) / 100.0; 
+					interest.set(i, tmp);
+					leftToPay.set(i, leftToPay.get(from - 2));
+				}
+			}
+		}
 	}	
 	@Override
 	public void stateChanged(ChangeEvent e) {
 		if (e.getSource() == sliderFrom || e.getSource() == sliderTo) { 
-	        updateTableFilter(sliderFrom, sliderTo);
-	        //System.out.println("sliderFrom: "+ sliderFrom.getValue());
-	        //System.out.println("sliderTo " + sliderTo.getValue());
+			updateMonthsDisplay(monthsDisplay, sliderFrom, sliderTo);
+			updateTable(monthsDisplay);
 	    }
 		
 	}
@@ -305,13 +222,13 @@ public class SecondFrame extends Calculator implements ChangeListener, ActionLis
 				howLong = Integer.parseInt(howLongString);
 				yearlyPercentage = Double.parseDouble(yearlyPercentageString);
 				
-				updateTablePostpone(from, howLong, yearlyPercentage);
-				updateTableFilter(sliderFrom, sliderTo);
+				updateMonthsDisplay(monthsDisplay, sliderFrom, sliderTo);
+				updatePostpone(from, howLong, yearlyPercentage);
+				updateTable(monthsDisplay);
 
 			}
 			catch (NumberFormatException ex) {
 				System.err.println("Netinkama ivestis");
-				submit.setEnabled(true);
 			}
 		}
 		if(e.getSource() == saveData) {
@@ -329,13 +246,15 @@ public class SecondFrame extends Calculator implements ChangeListener, ActionLis
 		}
 		
 		if (e.getSource() == showGraph) {
-
-			updateMonthsDisplayFilter(monthsDisplay, sliderFrom, sliderTo);
-
-			updateTablePostpone(from, howLong, yearlyPercentage);
+			System.out.println("1: " + monthlyPay.get(54));
+			updateMonthsDisplay(monthsDisplay, sliderFrom, sliderTo);
+			System.out.println("2: " + monthlyPay.get(54));
+			updatePostpone(from, howLong, yearlyPercentage);
+			System.out.println("3: " + monthlyPay.get(54));
+			updateTable(monthsDisplay);
+			System.out.println("4: " + monthlyPay.get(54));
 			Platform.setImplicitExit(false);
 			Platform.runLater(() -> { 
-
 				afterMain.doing();
 
 		      });

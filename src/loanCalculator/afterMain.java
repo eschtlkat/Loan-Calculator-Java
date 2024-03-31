@@ -29,20 +29,22 @@ public class afterMain extends Application {
 		Stage stage = new Stage();
 		NumberAxis xAxis = new NumberAxis();
         NumberAxis yAxis = new NumberAxis();
-        xAxis.setLabel("Months");
-        yAxis.setLabel("Monthly Payment");
+        xAxis.setLabel("Menesis");
+        yAxis.setLabel("Menesine imoka");
 
         // Creating the line chart
         LineChart<Number, Number> lineChart = new LineChart<>(xAxis, yAxis);
-        lineChart.setTitle("Monthly Payments");
+        lineChart.setTitle(""
+        		+ "Imokos");
 
         // Creating a series
         XYChart.Series<Number, Number> series = new XYChart.Series<>();
-        series.setName("Monthly Payments");
+        series.setName("Imokos");
 
         // Adding data to the series
         for (int i = 0; i < SecondFrame.monthsDisplay.size(); i++) {
-            series.getData().add(new XYChart.Data<>(SecondFrame.monthsDisplay.get(i), SecondFrame.monthlyPay.get(i)));
+        	int index = SecondFrame.monthsDisplay.get(i) - 1;
+            series.getData().add(new XYChart.Data<>(SecondFrame.monthsDisplay.get(i), SecondFrame.monthlyPay.get(index)));
         }
 
         // Adding the series to the line chart

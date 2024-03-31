@@ -21,8 +21,8 @@ public class Calculator{
 		this.whichGraph = whichGraph;
 		this.month = month;
 		this.year = year;
-		this.loanSum = loanSum;
-		this.percentage = percentage;
+		Calculator.loanSum = loanSum;
+		Calculator.percentage = percentage;
 		
 		allMonths = year * 12 + month;
 		monthsDisplay = new ArrayList<Integer>(); // Create an ArrayList
@@ -31,7 +31,6 @@ public class Calculator{
 		interest = new ArrayList<Double>();
 		
 		calculatePayments();
-		//updateTable();
 		
 	}
 	
@@ -44,36 +43,26 @@ public class Calculator{
 }
 	
 	public void calculatePayments() {
-		loanSumLeft = this.loanSum;
-		loanSumAll = this.loanSum;
+		loanSumLeft = Calculator.loanSum;
+		loanSumAll = Calculator.loanSum;
 		for (int i = 1; i <= allMonths; i++) {
 			
 			monthsDisplay.add(i);
 			
-			double monthlyPayment = this.loanSum / allMonths;
+			double monthlyPayment = Calculator.loanSum / allMonths;
 			monthlyPayment = Math.round(monthlyPayment * 100.0) / 100.0; 
 			monthlyPay.add(monthlyPayment);
 			
-			double inter = loanSumLeft * (this.percentage / 12 / 100);
+			double inter = loanSumLeft * (Calculator.percentage / 12 / 100);
 			inter = Math.round(inter * 100.0) / 100.0;
 			interest.add(inter);
 			loanSumAll += inter;
 			
+			loanSumLeft = Math.round(loanSumLeft * 100.0) / 100.0; 
 			leftToPay.add(loanSumLeft);
 			loanSumLeft -= monthlyPayment;
 			loanSumLeft = Math.round(loanSumLeft * 100.0) / 100.0; 
 		}
 		
 	}
-	
-	/*public void updateTable() {
-		for (int i = 0; i < monthsDisplay.size(); i++) {
-			System.out.print("Menesis: " + monthsDisplay.get(i));
-			System.out.print(" Ismoka: " + monthlyPay.get(i));
-			System.out.print(" Palukanos si menesi: " + interest.get(i));
-			System.out.println(" Liko moketi: " + leftToPay.get(i));	
-		}
-		System.out.println("Visa grazinama suma: " + loanSumAll);
-	}*/
-
 }
