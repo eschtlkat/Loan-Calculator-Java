@@ -145,7 +145,7 @@ public class SecondFrame extends Calculator implements ChangeListener, ActionLis
         frame.add(panel);
 
         // Create columns for the table
-        String[] columnHeaders = {"Menesis", "Ismoka", "Palukanos si menesi", "Liko moketi"};
+        String[] columnHeaders = {"Menesis", "Imoka(su palukanomis)", "Palukanos si menesi", "Liko moketi"};
 
         // Create a DefaultTableModel with specified columns
         model1 = new DefaultTableModel();
@@ -191,9 +191,9 @@ public class SecondFrame extends Calculator implements ChangeListener, ActionLis
 		for (int i = 0; i < allMonths; i++) {
 			if(from!= 0 && howLong != 0) {
 				if (i >= from - 1 && i < from + howLong - 1) { 
-					monthlyPay.set(i, (double) 0);
 					double tmp = Calculator.loanSum * yearlyPercentage / 100 / 12;
 					tmp = Math.round(tmp * 100.0) / 100.0; 
+					monthlyPay.set(i, tmp);
 					interest.set(i, tmp);
 					leftToPay.set(i, leftToPay.get(from - 2));
 				}
@@ -225,10 +225,12 @@ public class SecondFrame extends Calculator implements ChangeListener, ActionLis
 				updateMonthsDisplay(monthsDisplay, sliderFrom, sliderTo);
 				updatePostpone(from, howLong, yearlyPercentage);
 				updateTable(monthsDisplay);
+				submit.setEnabled(false);
 
 			}
 			catch (NumberFormatException ex) {
 				System.err.println("Netinkama ivestis");
+				submit.setEnabled(true);
 			}
 		}
 		if(e.getSource() == saveData) {

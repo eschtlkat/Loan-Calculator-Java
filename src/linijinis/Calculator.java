@@ -64,5 +64,9 @@ public class Calculator{
 			loanSumLeft = Math.round(loanSumLeft * 100.0) / 100.0; 
 		}
 		
+		for (int i = 0; i < allMonths; i++) {
+			monthlyPay.set(i, monthlyPay.get(i) + interest.get(i));
+		}
+		
 	}
 }
