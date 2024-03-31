@@ -70,5 +70,12 @@ public class Calculator{
 			monthlyPay.set(i, tmp);
 		}
 		
+		double left = loanSumAll;
+		for (int i = 0; i < allMonths; i++) {
+			leftToPay.set(i, left);
+			left -= monthlyPay.get(i);
+			left = Math.round(left * 100.0) / 100.0; 
+		}
+		
 	}
 }

@@ -238,7 +238,8 @@ public class secondFrameAnuit extends calculatorAnuit implements ChangeListener,
 				BufferedWriter bw = new BufferedWriter(new FileWriter("C:\\Users\\laura\\Desktop\\AntrosProgramosAtaskaita\\ataskaita.txt"));
 				bw.write("Menesis: Ismoka: Palukanos: Liko moketi: \n");
 				for (int i = 0; i < monthsDisplay.size(); i++) {
-					bw.write("     "+monthsDisplay.get(i) + "      "+monthlyPay.get(i)+"         "+interest.get(i)+"           "+ leftToPay.get(i)+"\n");
+					int index = monthsDisplay.get(i) - 1;
+					bw.write("     "+monthsDisplay.get(i) + "      "+monthlyPay.get(index)+"         "+interest.get(index)+"           "+ leftToPay.get(index)+"\n");
 				}
 				saveData.setEnabled(false);
 				bw.close();

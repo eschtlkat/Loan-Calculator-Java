@@ -64,18 +64,17 @@ public class calculatorAnuit{
 			loanSumLeft = Math.round(loanSumLeft * 100.0) / 100.0; 
 		}
 		
-		for (int i = 0; i < allMonths; i++) {
-			double tmp = monthlyPay.get(i) + interest.get(i);
-			tmp = Math.round(tmp * 100.0) / 100.0; 
-			monthlyPay.set(i, tmp);
-		}
 		
-		double loanSumAverage = loanSumAll /= allMonths;
-		loanSumAverage = Math.round(loanSumAverage * 100.0) / 100.0;
+		double loanSumAverage = loanSumAll / allMonths + 1;
 		loanSumLeft = loanSumAll;
+		System.out.println(loanSumAll+"\n");
 		for (int i = 0; i < allMonths; i++) {
-			monthlyPay.set(i, loanSumAverage);
+			leftToPay.set(i, loanSumLeft);
 			loanSumLeft -= loanSumAverage;
+			loanSumAverage = Math.round(loanSumAverage * 100.0) / 100.0;
+			monthlyPay.set(i, loanSumAverage);
+			loanSumLeft = Math.round(loanSumLeft * 100.0) / 100.0;
+			
 		}
 		
 	}
