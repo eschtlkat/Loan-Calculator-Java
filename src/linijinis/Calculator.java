@@ -65,7 +65,9 @@ public class Calculator{
 		}
 		
 		for (int i = 0; i < allMonths; i++) {
-			monthlyPay.set(i, monthlyPay.get(i) + interest.get(i));
+			double tmp = monthlyPay.get(i) + interest.get(i);
+			tmp = Math.round(tmp * 100.0) / 100.0; 
+			monthlyPay.set(i, tmp);
 		}
 		
 	}

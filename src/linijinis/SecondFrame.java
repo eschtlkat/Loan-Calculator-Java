@@ -248,13 +248,9 @@ public class SecondFrame extends Calculator implements ChangeListener, ActionLis
 		}
 		
 		if (e.getSource() == showGraph) {
-			System.out.println("1: " + monthlyPay.get(54));
 			updateMonthsDisplay(monthsDisplay, sliderFrom, sliderTo);
-			System.out.println("2: " + monthlyPay.get(54));
 			updatePostpone(from, howLong, yearlyPercentage);
-			System.out.println("3: " + monthlyPay.get(54));
 			updateTable(monthsDisplay);
-			System.out.println("4: " + monthlyPay.get(54));
 			Platform.setImplicitExit(false);
 			Platform.runLater(() -> { 
 				afterMain.doing();
