@@ -42,10 +42,6 @@ public class MyFrame extends JFrame implements ActionListener {
 	public MyFrame() {	
 		this.setTitle("Busto paskolos skaiciuokle");
 		
-		image = new ImageIcon("C:\\Users\\laura\\eclipse-workspace\\loanCalculator\\src\\a.jpg"); //create an image icon
-		this.setIconImage(image.getImage()); //change icon of this
-		this.getContentPane().setBackground(Color.lightGray); //change color of background
-		
 		labelOne = new JLabel("Pageidautina paskolos suma"); //create a label and set text of label
 		labelTwo = new JLabel("Metai"); //create a label and set text of label
 		labelThree = new JLabel("Menesiai"); //create a label and set text of label
