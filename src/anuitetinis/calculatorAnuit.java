@@ -31,7 +31,6 @@ public class calculatorAnuit{
 		interest = new ArrayList<Double>();
 		
 		calculatePayments();
-		updateTable();
 		
 	}
 	
@@ -44,9 +43,8 @@ public class calculatorAnuit{
 }
 	
 	public void calculatePayments() {
-		loanSumLeft = this.loanSum;
-		loanSumAll = this.loanSum;
-		leftToPay.add(loanSumLeft);
+		loanSumLeft = calculatorAnuit.loanSum;
+		loanSumAll = calculatorAnuit.loanSum;
 		for (int i = 1; i <= allMonths; i++) {
 			
 			monthsDisplay.add(i);
@@ -60,22 +58,17 @@ public class calculatorAnuit{
 			interest.add(inter);
 			loanSumAll += inter;
 			
-			loanSumLeft -= monthlyPayment;
 			loanSumLeft = Math.round(loanSumLeft * 100.0) / 100.0; 
 			leftToPay.add(loanSumLeft);
-			
+			loanSumLeft -= monthlyPayment;
+			loanSumLeft = Math.round(loanSumLeft * 100.0) / 100.0; 
+		}
+		
+		for (int i = 0; i < allMonths; i++) {
+			double tmp = monthlyPay.get(i) + interest.get(i);
+			tmp = Math.round(tmp * 100.0) / 100.0; 
+			monthlyPay.set(i, tmp);
 		}
 		
 	}
-	
-	public void updateTable() {
-		for (int i = 0; i < monthsDisplay.size(); i++) {
-			System.out.print("Menesis: " + monthsDisplay.get(i));
-			System.out.print(" Ismoka: " + monthlyPay.get(i));
-			System.out.print(" Palukanos si menesi: " + interest.get(i));
-			System.out.println(" Liko moketi: " + leftToPay.get(i));	
-		}
-		System.out.println("Visa grazinama suma: " + loanSumAll);
-	}
-
 }

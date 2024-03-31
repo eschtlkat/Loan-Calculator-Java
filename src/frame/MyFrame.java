@@ -167,7 +167,7 @@ public class MyFrame extends JFrame implements ActionListener {
 					else if (whichGraph == 1) {
 						calculator2 = new calculatorAnuit(whichGraph, month, year, loanSum, percentage);
 						this.dispose();
-						secondFrameAnuit secondFrame = new secondFrameAnuit(Calculator.monthsDisplay, Calculator.monthlyPay,
+						secondFrameAnuit secondFrame = new secondFrameAnuit(calculatorAnuit.monthsDisplay, calculatorAnuit.monthlyPay,
 				                calculator2.interest, calculator2.leftToPay, calculator2.loanSumAll);
 					}
 					
