@@ -70,5 +70,13 @@ public class calculatorAnuit{
 			monthlyPay.set(i, tmp);
 		}
 		
+		double loanSumAverage = loanSumAll /= allMonths;
+		loanSumAverage = Math.round(loanSumAverage * 100.0) / 100.0;
+		loanSumLeft = loanSumAll;
+		for (int i = 0; i < allMonths; i++) {
+			monthlyPay.set(i, loanSumAverage);
+			loanSumLeft -= loanSumAverage;
+		}
+		
 	}
 }

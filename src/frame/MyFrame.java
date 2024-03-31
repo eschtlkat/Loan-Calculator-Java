@@ -26,7 +26,11 @@ public class MyFrame extends JFrame implements ActionListener {
 	JComboBox<Integer> comboBoxMonths, comboBoxYears;
 	
 	JButton button, buttonAnuiteto, buttonLinijinis;
-	int whichGraph = 0, month = 0, year = 0; 
+	public static int whichGraph = 0;
+
+	int month = 0;
+
+	int year = 0; 
 	double loanSum, percentage;
 	
 	ImageIcon image;

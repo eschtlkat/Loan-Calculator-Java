@@ -2,6 +2,8 @@ package loanCalculator;
 
 import java.util.ArrayList;
 
+import anuitetinis.secondFrameAnuit;
+import frame.MyFrame;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
@@ -42,9 +44,18 @@ public class afterMain extends Application {
         series.setName("Imokos");
 
         // Adding data to the series
-        for (int i = 0; i < SecondFrame.monthsDisplay.size(); i++) {
-        	int index = SecondFrame.monthsDisplay.get(i) - 1;
-            series.getData().add(new XYChart.Data<>(SecondFrame.monthsDisplay.get(i), SecondFrame.monthlyPay.get(index)));
+        
+        
+        if (MyFrame.whichGraph == 1) {
+        	for (int i = 0; i < secondFrameAnuit.monthsDisplay.size(); i++) {
+            	int index = secondFrameAnuit.monthsDisplay.get(i) - 1;
+                series.getData().add(new XYChart.Data<>(secondFrameAnuit.monthsDisplay.get(i), secondFrameAnuit.monthlyPay.get(index)));
+            }
+        } else {
+        	for (int i = 0; i < SecondFrame.monthsDisplay.size(); i++) {
+            	int index = SecondFrame.monthsDisplay.get(i) - 1;
+                series.getData().add(new XYChart.Data<>(SecondFrame.monthsDisplay.get(i), SecondFrame.monthlyPay.get(index)));
+            }
         }
 
         // Adding the series to the line chart
